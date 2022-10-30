@@ -76,13 +76,13 @@ class User(db.Model):
         found_user_list = [user for user in self.following if user == other_user]
         return len(found_user_list) == 1
 
-    @classmethod
-    def edit_user(cls, username, email, image_url, header_image_url, bio):
-        """edit an existing user"""
-        user = User(username=username, email=email, image_url=image_url, header_image_url=header_image_url, bio=bio)
+    # @classmethod
+    # def edit_user(cls, username, email, image_url, header_image_url, bio):
+    #     """edit an existing user"""
+    #     user = User(username=username, email=email, image_url=image_url, header_image_url=header_image_url, bio=bio)
 
-        db.session.add(user)
-        return user
+    #     db.session.add(user)
+    #     return user
 
 
     @classmethod
