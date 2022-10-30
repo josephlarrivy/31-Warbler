@@ -77,6 +77,15 @@ class User(db.Model):
         return len(found_user_list) == 1
 
     @classmethod
+    def edit_user(cls, username, email, image_url, header_image_url, bio):
+        """edit an existing user"""
+        user = User(username=username, email=email, image_url=image_url, header_image_url=header_image_url, bio=bio)
+
+        db.session.add(user)
+        return user
+
+
+    @classmethod
     def signup(cls, username, email, password, image_url):
         """Sign up user hashes password and adds user to system."""
 
@@ -85,6 +94,7 @@ class User(db.Model):
         db.session.add(user)
 
         return user
+
 
     @classmethod
     def authenticate(cls, username, password):
