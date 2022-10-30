@@ -25,7 +25,7 @@ toolbar = DebugToolbarExtension(app)
 connect_db(app)
 
 
-##############################################################################
+################################################
 # User signup/login/logout
 
 
@@ -46,11 +46,14 @@ def do_login(user):
     session[CURR_USER_KEY] = user.id
 
 
+@app.route('/logout', methods=['GET', 'POST'])
 def do_logout():
     """Logout user."""
 
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
+    flash('logged out')
+    return redirect('/')
 
 
 @app.route('/signup', methods=["GET", "POST"])
