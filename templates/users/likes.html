@@ -1,0 +1,30 @@
+{% extends 'users/detail.html' %}
+{% block user_details %}
+<div class="col-lg-6 col-md-8 col-sm-12">
+    <ul class="list-group" id="messages">
+        {% for warble in liked_warbles %}
+        <li class="list-group-item">
+
+
+            <a href="/messages/{{ warble.id  }}" class="message-link">
+                <a href="/users/{{ warble.user.id }}">
+                    <img src="{{ warble.user.image_url }}" alt="" class="timeline-image">
+                </a>
+                <div class="message-area">
+                    <a href="/users/{{ warble.user.id }}">@{{ warble.user.username }}</a>
+                    <span class="text-muted">{{ warble.timestamp.strftime('%d %B %Y') }}</span>
+                    <p>{{ warble.text }}</p>
+                </div>
+                <form method="POST" action="/users/add_like/{{warble.id }}" id="messages-form">
+                    <button class="
+                btn 
+                btn-sm 
+                {{'btn-primary' if warble.id in likes else 'btn-secondary'}}">
+                        <i class="fa fa-thumbs-up"></i>
+                    </button>
+                </form>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

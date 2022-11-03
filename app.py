@@ -145,8 +145,6 @@ def users_show(user_id):
 
     user = User.query.get_or_404(user_id)
 
-    # snagging messages in order from the database;
-    # user.messages won't be in order by default
     messages = (Message
                 .query
                 .filter(Message.user_id == user_id)
@@ -298,6 +296,45 @@ def messages_destroy(message_id):
     db.session.commit()
 
     return redirect(f"/users/{g.user.id}")
+
+
+@app.route('/users/add_like/<int:message_id>', methods=['GET', 'POST'])
+def like_message(message_id):
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    
+    liked_warble = Message.query.get_or_404(message_id)
+    if liked_warble.user_id == g.user.id:
+        flash('cannot like your own warbles')
+        return redirect('/')
+
+    g.user.likes.append(liked_warble)   
+    db.session.commit()
+
+    return redirect(f'/users/{g.user.id}/likes')
+
+
+@app.route('/users/<int:user_id>/likes')
+def show_likes(user_id):
+    """show likes warbles"""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    user = User.query.get_or_404(user_id)
+    liked_warbles = user.likes
+
+    for warble in liked_warbles:
+        print(warble.text)
+
+    return render_template('users/likes.html', user=user, liked_warbles=liked_warbles)
+
+
+
+
 
 
 ##############################################################################

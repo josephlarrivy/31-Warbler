@@ -21,7 +21,7 @@ class Likes(db.Model):
 
     __tablename__ = 'likes' 
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='cascade'))
     message_id = db.Column(db.Integer, db.ForeignKey('messages.id', ondelete='cascade'), unique=True)
 
