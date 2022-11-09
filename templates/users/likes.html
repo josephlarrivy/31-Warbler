@@ -15,12 +15,9 @@
                     <span class="text-muted">{{ warble.timestamp.strftime('%d %B %Y') }}</span>
                     <p>{{ warble.text }}</p>
                 </div>
-                <form method="POST" action="/users/add_like/{{warble.id }}" id="messages-form">
-                    <button class="
-                btn 
-                btn-sm 
-                {{'btn-primary' if warble.id in likes else 'btn-secondary'}}">
-                        <i class="fa fa-thumbs-up"></i>
+                <form method="POST" action="/users/remove_like/{{warble.id}}" id="messages-form">
+                    <button class="btn btn-sm {{'btn-primary' if warble.id in likes else 'btn-secondary'}}">
+                        <i class="fa fa-star"></i>
                     </button>
                 </form>
         </li>

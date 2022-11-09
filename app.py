@@ -317,6 +317,28 @@ def like_message(message_id):
     return redirect(f'/users/{g.user.id}/likes')
 
 
+@app.route('/users/remove_like/<int:message_id>', methods=['GET', 'POST'])
+def unlike_message(message_id):
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    liked_warble = Message.query.get_or_404(message_id)
+    if liked_warble.user_id == g.user.id:
+        flash('cannot like your own warbles')
+        return redirect('/')
+
+    g.user.likes.remove(liked_warble)
+    db.session.commit()
+
+    return redirect(f'/users/{g.user.id}/likes')
+
+
+
+
+
+
 @app.route('/users/<int:user_id>/likes')
 def show_likes(user_id):
     """show likes warbles"""
